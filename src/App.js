@@ -28,7 +28,7 @@ export default function App() {
       <div className="areaInput">
         <input
           type="text"
-          placeholder="Digite o nome do usuário"
+          placeholder="Username"
           value={input}
           onChange={(e) => setInput(e.target.value)}
         />
