@@ -18,6 +18,7 @@ export default function App() {
     }
     catch (error) {
       alert("Usuario não encontrado")
+      setInput('');
     }
   }
 
