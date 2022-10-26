@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import axios from "axios";
+import './App.css'
 
-function App() {
+export default function App() {
+
+  const [user, setUser] = useState([]);
+  const [input, setInput] = useState('');
+  const api = axios.create({
+    baseURL: 'https://api.github.com/users/'
+  })
+
+  async function loadUser() {
+    try {
+      const response = await api.get(input);
+      setUser(response.data);
+      setInput('');
+    }
+    catch (error) {
+      alert("Usuario não encontrado")
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+    <div className="container">
+      <h1>GitHub User</h1>
+      <div className="areaInput">
+        <input
+          type="text"
+          placeholder="Digite o nome do usuário"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <div className="button" onClick={loadUser}>
+          <div className="textButton">Pesquisar</div>
+        </div>
+      </div>
+      <div className="areaResponse">
+        <div className="areaImg">
+          <img src={user.avatar_url} alt="" />
+        </div>
+        <div className="textName">{user.name}</div>
+        <a href={user.html_url} target="blank">{user.html_url}</a>
 
-export default App;
+      </div>
+
+    </div>
+  )
+}
